@@ -10,10 +10,10 @@
 </head>
 <body>
 
-<!-- ══ TOP BAR ══════════════════════════════════════════════════════════ -->
+<!-- ════ TOPBAR ════════════════════════════════════════════════════════ -->
 <header class="topbar">
   <div class="logo-wrap">
-    <div class="logo-icon">🌐</div>
+    <div class="logo-icon-ring">🎯</div>
     <div>
       <div class="logo-name">BugHunter URLs</div>
       <div class="logo-sub">URL Manager for Pentesters</div>
@@ -23,7 +23,7 @@
   <div class="search-bar">
     <span class="s-icon">🔍</span>
     <input type="text" id="search-inp" placeholder="Search URLs, domains, notes, tags…"/>
-    <span class="search-shortcut">Ctrl /</span>
+    <span class="shortcut-badge">Ctrl /</span>
   </div>
 
   <div class="topbar-right">
@@ -33,88 +33,66 @@
   </div>
 </header>
 
-<!-- ══ BODY ══════════════════════════════════════════════════════════════ -->
+<!-- ════ BODY ══════════════════════════════════════════════════════════ -->
 <div class="app-body">
 
-  <!-- ── SIDEBAR ──────────────────────────────────────────────────────── -->
+  <!-- ── SIDEBAR ─────────────────────────────────────────────────────── -->
   <nav class="sidebar">
-    <div class="sidebar-inner">
+    <div class="sb-inner">
 
-      <div class="sb-section-label">Manage</div>
-      <div class="sb-item active" data-cat="all">
+      <!-- Active nav -->
+      <div class="sb-item active" data-cat="all" style="margin-bottom:6px;">
+        <span class="sb-icon">🏠</span>
+        <span class="sb-label">Dashboard</span>
+      </div>
+
+      <div class="sb-section">Manage</div>
+
+      <div class="sb-item" data-cat="all">
         <span class="sb-icon">🌐</span>
         <span class="sb-label">All URLs</span>
         <span class="sb-count" id="sb-all">0</span>
       </div>
       <div class="sb-item" data-cat="login">
-        <span class="sb-dot" style="background:#00d4ff"></span>
+        <span class="sb-icon">🔐</span>
         <span class="sb-label">Login URLs</span>
         <span class="sb-count" id="sb-login">0</span>
       </div>
       <div class="sb-item" data-cat="signup">
-        <span class="sb-dot" style="background:#00e676"></span>
+        <span class="sb-icon">👤</span>
         <span class="sb-label">Signup URLs</span>
         <span class="sb-count" id="sb-signup">0</span>
       </div>
       <div class="sb-item" data-cat="register">
-        <span class="sb-dot" style="background:#a855f7"></span>
+        <span class="sb-icon">📝</span>
         <span class="sb-label">Register URLs</span>
         <span class="sb-count" id="sb-register">0</span>
       </div>
-      <div class="sb-item" data-cat="dashboard">
-        <span class="sb-dot" style="background:#ff9800"></span>
-        <span class="sb-label">Dashboard URLs</span>
-        <span class="sb-count" id="sb-dashboard" style="display:none">0</span>
-      </div>
-      <div class="sb-item" data-cat="all" id="sb-dups-item" style="color:var(--red)">
+      <div class="sb-item" style="color:var(--red)">
         <span class="sb-icon">⚠️</span>
         <span class="sb-label">Duplicates</span>
-        <span class="sb-count" id="sb-dups">0</span>
+        <span class="sb-count" id="sb-dups" style="color:var(--orange);border-color:rgba(255,152,0,.3);background:rgba(255,152,0,.1)">0</span>
       </div>
 
-      <div class="sb-section-label">Organize</div>
-      <div class="sb-item">
-        <span class="sb-icon">🗂</span>
-        <span class="sb-label">Categories</span>
-      </div>
-      <div class="sb-item">
-        <span class="sb-icon">🏷</span>
-        <span class="sb-label">Tags</span>
-      </div>
-      <div class="sb-item">
-        <span class="sb-icon">📓</span>
-        <span class="sb-label">Notes</span>
-      </div>
+      <div class="sb-section">Organize</div>
+      <div class="sb-item"><span class="sb-icon">🗂</span><span class="sb-label">Categories</span></div>
+      <div class="sb-item"><span class="sb-icon">🏷</span><span class="sb-label">Tags</span></div>
+      <div class="sb-item"><span class="sb-icon">📓</span><span class="sb-label">Notes</span></div>
 
-      <div class="sb-section-label">Tools</div>
-      <div class="sb-item" id="sb-import">
-        <span class="sb-icon">📥</span>
-        <span class="sb-label">Import URLs</span>
-      </div>
-      <div class="sb-item" onclick="exportExcel()">
-        <span class="sb-icon">📤</span>
-        <span class="sb-label">Export URLs</span>
-      </div>
-      <div class="sb-item" id="sb-scan">
-        <span class="sb-icon">🔎</span>
-        <span class="sb-label">Scan URLs</span>
-      </div>
+      <div class="sb-section">Tools</div>
+      <div class="sb-item" id="sb-import"><span class="sb-icon">📥</span><span class="sb-label">Import URLs</span></div>
+      <div class="sb-item" onclick="exportExcel()"><span class="sb-icon">📤</span><span class="sb-label">Export URLs</span></div>
+      <div class="sb-item" id="sb-scan"><span class="sb-icon">🔎</span><span class="sb-label">Scan URLs</span></div>
 
-      <div class="sb-section-label">Others</div>
-      <div class="sb-item">
-        <span class="sb-icon">⚙️</span>
-        <span class="sb-label">Settings</span>
-      </div>
-      <div class="sb-item">
-        <span class="sb-icon">ℹ️</span>
-        <span class="sb-label">About</span>
-      </div>
+      <div class="sb-section">Others</div>
+      <div class="sb-item"><span class="sb-icon">⚙️</span><span class="sb-label">Settings</span></div>
+      <div class="sb-item"><span class="sb-icon">ℹ️</span><span class="sb-label">About</span></div>
 
-    </div><!-- /sidebar-inner -->
+    </div>
 
-    <!-- Stay Anonymous card -->
+    <!-- Stay Anonymous -->
     <div class="anon-card">
-      <div class="anon-avatar">🕵️</div>
+      <div class="hacker-avatar">🥷</div>
       <div>
         <div class="anon-title">Stay Anonymous</div>
         <div class="anon-sub">Always respect the rules of engagement.</div>
@@ -122,182 +100,176 @@
     </div>
   </nav>
 
-  <!-- ── MAIN ─────────────────────────────────────────────────────────── -->
+  <!-- ── MAIN ──────────────────────────────────────────────────────── -->
   <main class="main">
 
     <!-- STAT CARDS -->
     <div class="stat-row">
 
-      <div class="stat-card" id="sc-total" style="--c:#00d4ff">
-        <div class="stat-label-top">Total URLs</div>
-        <div class="stat-row-val">
-          <div class="stat-num">0</div>
-          <div class="stat-icon-box" style="background:rgba(0,212,255,.1)">🌐</div>
+      <div class="stat-card" style="--cc:#00d4ff;--cc-bg:rgba(0,212,255,.1)" id="sc-total">
+        <div class="sc-label">Total URLs</div>
+        <div class="sc-body">
+          <div class="sc-num">0</div>
+          <div class="sc-icon" style="background:rgba(0,212,255,.1)">🌐</div>
         </div>
-        <div class="stat-sub">All saved URLs</div>
+        <div class="sc-sub">All saved URLs</div>
         <div class="sparkline"></div>
       </div>
 
-      <div class="stat-card" id="sc-login" style="--c:#00d4ff">
-        <div class="stat-label-top">Login URLs</div>
-        <div class="stat-row-val">
-          <div class="stat-num">0</div>
-          <div class="stat-icon-box" style="background:rgba(0,212,255,.1)">🔐</div>
+      <div class="stat-card" style="--cc:#00d4ff;--cc-bg:rgba(0,212,255,.1)" id="sc-login">
+        <div class="sc-label">Login URLs</div>
+        <div class="sc-body">
+          <div class="sc-num">0</div>
+          <div class="sc-icon" style="background:rgba(0,212,255,.1)">🔐</div>
         </div>
-        <div class="stat-sub">Possible login pages</div>
+        <div class="sc-sub">Possible login pages</div>
         <div class="sparkline"></div>
       </div>
 
-      <div class="stat-card" id="sc-signup" style="--c:#00e676">
-        <div class="stat-label-top">Signup URLs</div>
-        <div class="stat-row-val">
-          <div class="stat-num" style="color:#00e676">0</div>
-          <div class="stat-icon-box" style="background:rgba(0,230,118,.1)">👤</div>
+      <div class="stat-card" style="--cc:#00e676;--cc-bg:rgba(0,230,118,.1)" id="sc-signup">
+        <div class="sc-label">Signup URLs</div>
+        <div class="sc-body">
+          <div class="sc-num">0</div>
+          <div class="sc-icon" style="background:rgba(0,230,118,.1)">👤</div>
         </div>
-        <div class="stat-sub">Possible signup pages</div>
+        <div class="sc-sub">Possible signup pages</div>
         <div class="sparkline"></div>
       </div>
 
-      <div class="stat-card" id="sc-register" style="--c:#a855f7">
-        <div class="stat-label-top">Register URLs</div>
-        <div class="stat-row-val">
-          <div class="stat-num" style="color:#a855f7">0</div>
-          <div class="stat-icon-box" style="background:rgba(168,85,247,.1)">📝</div>
+      <div class="stat-card" style="--cc:#a855f7;--cc-bg:rgba(168,85,247,.1)" id="sc-register">
+        <div class="sc-label">Register URLs</div>
+        <div class="sc-body">
+          <div class="sc-num">0</div>
+          <div class="sc-icon" style="background:rgba(168,85,247,.1)">📝</div>
         </div>
-        <div class="stat-sub">Possible register pages</div>
+        <div class="sc-sub">Possible register pages</div>
         <div class="sparkline"></div>
       </div>
 
-      <div class="stat-card" id="sc-dashboard" style="--c:#ff9800">
-        <div class="stat-label-top">Dashboard Pages</div>
-        <div class="stat-row-val">
-          <div class="stat-num" style="color:#ff9800">0</div>
-          <div class="stat-icon-box" style="background:rgba(255,152,0,.1)">⊞</div>
+      <div class="stat-card" style="--cc:#ff9800;--cc-bg:rgba(255,152,0,.1)" id="sc-dashboard">
+        <div class="sc-label">Dashboard Pages</div>
+        <div class="sc-body">
+          <div class="sc-num">0</div>
+          <div class="sc-icon" style="background:rgba(255,152,0,.1)">⊞</div>
         </div>
-        <div class="stat-sub">Dashboard pages</div>
+        <div class="sc-sub">Dashboard pages</div>
         <div class="sparkline"></div>
       </div>
 
-      <div class="stat-card" id="sc-dups" style="--c:#ff4757">
-        <div class="stat-label-top">Duplicates</div>
-        <div class="stat-row-val">
-          <div class="stat-num" style="color:#ff4757">0</div>
-          <div class="stat-icon-box" style="background:rgba(255,71,87,.1)">⚠️</div>
+      <div class="stat-card" style="--cc:#ff4757;--cc-bg:rgba(255,71,87,.1)" id="sc-dups">
+        <div class="sc-label">Duplicates</div>
+        <div class="sc-body">
+          <div class="sc-num">0</div>
+          <div class="sc-icon" style="background:rgba(255,71,87,.1)">⚠️</div>
         </div>
-        <div class="stat-sub">Duplicate entries</div>
+        <div class="sc-sub">Duplicate entries</div>
         <div class="sparkline"></div>
       </div>
 
-    </div><!-- /stat-row -->
+    </div>
 
     <!-- MID ROW -->
     <div class="mid-row">
 
-      <!-- ADD URL -->
+      <!-- ADD URL CARD -->
       <div class="card">
         <div class="card-head">
           <div class="card-title">
-            <span style="background:linear-gradient(135deg,#00d4ff22,#a855f722);border:1px solid #00d4ff33;border-radius:7px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:14px;">➕</span>
+            <div class="card-title-icon">➕</div>
             Add New URL
           </div>
         </div>
         <div class="card-body">
 
-          <!-- URL -->
           <div class="form-group">
-            <div class="form-label">URL <span style="color:#ff4757">*</span></div>
+            <div class="form-label">URL <span style="color:var(--red)">*</span></div>
             <div class="input-wrap">
-              <span class="inp-icon">🔗</span>
+              <span class="inp-ico">🔗</span>
               <input type="url" id="inp-url" class="has-icon" placeholder="https://example.com/login" autocomplete="off" spellcheck="false"/>
             </div>
-            <div class="err-msg" id="url-err"></div>
+            <div class="err-txt" id="url-err"></div>
           </div>
 
-          <!-- Category -->
-          <div class="form-group">
-            <div class="form-label">Category <span style="color:#ff4757">*</span></div>
-            <div class="cat-select-wrap">
-              <span class="cat-icon">🔐</span>
-              <select id="inp-cat" onchange="updateCatIcon(this)">
-                <option value="login">Login</option>
-                <option value="signup">Signup</option>
-                <option value="register">Register</option>
-                <option value="dashboard">Dashboard</option>
-              </select>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group" style="margin-bottom:0">
+              <div class="form-label">Category <span style="color:var(--red)">*</span></div>
+              <div class="cat-wrap">
+                <span class="cat-ico" id="cat-ico">🔐</span>
+                <select id="inp-cat" onchange="syncCatIcon(this)">
+                  <option value="login">Login</option>
+                  <option value="signup">Signup</option>
+                  <option value="register">Register</option>
+                  <option value="dashboard">Dashboard</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <div class="form-label">Tags <span class="opt">(Optional)</span></div>
+              <div class="tags-wrap" id="tags-wrap" onclick="document.getElementById('tag-inp').focus()">
+                <input type="text" class="tag-inp-el" id="tag-inp" placeholder="e.g. admin, panel, oauth"/>
+              </div>
             </div>
           </div>
 
-          <!-- Tags -->
-          <div class="form-group">
-            <div class="form-label">Tags <span class="opt">(Optional) — Press Enter or comma to add</span></div>
-            <div class="tags-wrap" id="tags-wrap">
-              <input type="text" class="tags-input" id="tag-inp" placeholder="e.g. admin, panel, oauth"/>
-            </div>
-          </div>
-
-          <!-- Notes -->
-          <div class="form-group">
+          <div class="form-group" style="margin-top:14px;">
             <div class="form-label">Notes <span class="opt">(Optional)</span></div>
             <textarea id="inp-note" placeholder="Add notes about this URL…"></textarea>
           </div>
 
-          <!-- Buttons -->
           <div class="form-btns">
             <button class="btn btn-reset" id="btn-reset">↺ Reset</button>
             <button class="btn btn-primary" id="btn-add">➕ Add URL</button>
           </div>
 
         </div>
-      </div><!-- /add url card -->
+      </div>
 
-      <!-- RIGHT COL -->
+      <!-- RIGHT -->
       <div class="right-col">
 
         <!-- URL Distribution -->
         <div class="card">
           <div class="card-head">
             <div class="card-title">📊 URL Distribution</div>
-            <select class="time-select">
+            <select class="time-sel">
               <option>All Time</option>
               <option>This Week</option>
               <option>This Month</option>
             </select>
           </div>
           <div class="card-body">
-            <div style="position:relative;">
-              <div class="chart-wrap">
-                <canvas id="distChart"></canvas>
-                <div class="chart-center-label">
-                  <div class="chart-center-num" id="chart-center-num">0</div>
-                  <div class="chart-center-sub">Total</div>
-                </div>
+            <div class="chart-outer">
+              <canvas id="distChart"></canvas>
+              <div class="chart-center">
+                <div class="chart-center-num" id="chart-num">0</div>
+                <div class="chart-center-lbl">Total</div>
               </div>
             </div>
-            <div class="dist-legend" style="margin-top:14px;">
-              <div class="dist-legend-item">
-                <span class="dist-dot" style="background:#00d4ff"></span>
-                <span class="dist-label">Login</span>
-                <span id="dist-login"><span class="dist-val">0</span><span class="dist-pct">(0%)</span></span>
+            <div class="legend">
+              <div class="legend-row">
+                <span class="l-dot" style="background:#00d4ff"></span>
+                <span class="l-name">Login</span>
+                <span id="l-login"><span class="l-val">0</span><span class="l-pct">(0%)</span></span>
               </div>
-              <div class="dist-legend-item">
-                <span class="dist-dot" style="background:#00e676"></span>
-                <span class="dist-label">Signup</span>
-                <span id="dist-signup"><span class="dist-val">0</span><span class="dist-pct">(0%)</span></span>
+              <div class="legend-row">
+                <span class="l-dot" style="background:#00e676"></span>
+                <span class="l-name">Signup</span>
+                <span id="l-signup"><span class="l-val">0</span><span class="l-pct">(0%)</span></span>
               </div>
-              <div class="dist-legend-item">
-                <span class="dist-dot" style="background:#a855f7"></span>
-                <span class="dist-label">Register</span>
-                <span id="dist-register"><span class="dist-val">0</span><span class="dist-pct">(0%)</span></span>
+              <div class="legend-row">
+                <span class="l-dot" style="background:#a855f7"></span>
+                <span class="l-name">Register</span>
+                <span id="l-register"><span class="l-val">0</span><span class="l-pct">(0%)</span></span>
               </div>
-              <div class="dist-legend-item">
-                <span class="dist-dot" style="background:#ff9800"></span>
-                <span class="dist-label">Dashboard</span>
-                <span id="dist-dashboard"><span class="dist-val">0</span><span class="dist-pct">(0%)</span></span>
+              <div class="legend-row">
+                <span class="l-dot" style="background:#ff9800"></span>
+                <span class="l-name">Dashboard</span>
+                <span id="l-dashboard"><span class="l-val">0</span><span class="l-pct">(0%)</span></span>
               </div>
-              <div class="dist-legend-item">
-                <span class="dist-dot" style="background:#ff4757"></span>
-                <span class="dist-label">Duplicates</span>
-                <span id="dist-dups"><span class="dist-val">0</span><span class="dist-pct">(0%)</span></span>
+              <div class="legend-row">
+                <span class="l-dot" style="background:#ff4757"></span>
+                <span class="l-name">Duplicates</span>
+                <span id="l-dups"><span class="l-val">0</span><span class="l-pct">(0%)</span></span>
               </div>
             </div>
           </div>
@@ -309,35 +281,35 @@
             <div class="card-title">⚡ Quick Stats</div>
           </div>
           <div class="card-body" style="padding:14px;">
-            <div class="quick-stats">
-              <div class="qs-card">
-                <div class="qs-icon" style="background:rgba(0,212,255,.1)">🚀</div>
+            <div class="qs-grid">
+              <div class="qs-cell">
+                <div class="qs-ico" style="background:rgba(0,212,255,.1)">🚀</div>
                 <div>
-                  <div class="qs-val" id="qs-today">0</div>
+                  <div class="qs-num" id="qs-today">0</div>
                   <div class="qs-lbl">Today Added</div>
                   <div class="qs-pct">+0%</div>
                 </div>
               </div>
-              <div class="qs-card">
-                <div class="qs-icon" style="background:rgba(0,230,118,.1)">📅</div>
+              <div class="qs-cell">
+                <div class="qs-ico" style="background:rgba(0,230,118,.1)">📅</div>
                 <div>
-                  <div class="qs-val" id="qs-week">0</div>
+                  <div class="qs-num" id="qs-week">0</div>
                   <div class="qs-lbl">This Week</div>
                   <div class="qs-pct">+0%</div>
                 </div>
               </div>
-              <div class="qs-card">
-                <div class="qs-icon" style="background:rgba(168,85,247,.1)">🛡</div>
+              <div class="qs-cell">
+                <div class="qs-ico" style="background:rgba(168,85,247,.1)">🛡</div>
                 <div>
-                  <div class="qs-val" id="qs-month">0</div>
+                  <div class="qs-num" id="qs-month">0</div>
                   <div class="qs-lbl">This Month</div>
                   <div class="qs-pct">+0%</div>
                 </div>
               </div>
-              <div class="qs-card">
-                <div class="qs-icon" style="background:rgba(255,152,0,.1)">🎯</div>
+              <div class="qs-cell">
+                <div class="qs-ico" style="background:rgba(255,152,0,.1)">🎯</div>
                 <div>
-                  <div class="qs-val" id="qs-scan">0</div>
+                  <div class="qs-num" id="qs-scan">0</div>
                   <div class="qs-lbl">Total Scanned</div>
                   <div class="qs-pct">+0%</div>
                 </div>
@@ -347,24 +319,23 @@
         </div>
 
       </div><!-- /right-col -->
-
     </div><!-- /mid-row -->
 
     <!-- RECENT URLS TABLE -->
     <div class="card">
       <div class="card-head">
-        <div class="card-title">📋 Recent URLs</div>
-        <div class="table-head-row" style="flex:1;justify-content:flex-end;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <div class="card-title">🕐 Recent URLs</div>
+        <div class="tbl-head">
           <div class="filter-tabs">
-            <button class="ftab active" data-cat="all">All</button>
-            <button class="ftab" data-cat="login"     style="--ac:#00d4ff">Login</button>
-            <button class="ftab" data-cat="signup"    style="--ac:#00e676">Signup</button>
-            <button class="ftab" data-cat="register"  style="--ac:#a855f7">Register</button>
-            <button class="ftab" data-cat="dashboard" style="--ac:#ff9800">Dashboard</button>
+            <button class="ftab active" data-cat="all" style="--fac:rgba(124,58,237,.2);--fac-b:rgba(124,58,237,.5)">All</button>
+            <button class="ftab" data-cat="login"     style="--fac:rgba(0,212,255,.15);--fac-b:rgba(0,212,255,.4)">Login</button>
+            <button class="ftab" data-cat="signup"    style="--fac:rgba(0,230,118,.15);--fac-b:rgba(0,230,118,.4)">Signup</button>
+            <button class="ftab" data-cat="register"  style="--fac:rgba(168,85,247,.15);--fac-b:rgba(168,85,247,.4)">Register</button>
+            <button class="ftab" data-cat="dashboard" style="--fac:rgba(255,152,0,.15);--fac-b:rgba(255,152,0,.4)">Dashboard</button>
           </div>
-          <button class="btn btn-danger btn-sm" onclick="clearAll()">🗑 Clear</button>
-          <button class="btn btn-ghost btn-sm" onclick="exportExcel()">📥 Export</button>
-          <div class="view-all-btn">View All →</div>
+          <button class="btn btn-danger btn-sm" onclick="clearAll()">🗑</button>
+          <button class="btn btn-ghost btn-sm"  onclick="exportExcel()">📤 Export</button>
+          <div class="view-all">View All →</div>
         </div>
       </div>
 
@@ -385,8 +356,8 @@
           <tbody id="tbl-body"></tbody>
         </table>
 
-        <div class="empty-state" id="empty-st">
-          <div class="empty-icon">📭</div>
+        <div class="empty-st" id="empty-st">
+          <div class="empty-ico">📭</div>
           <div class="empty-title">No URLs added yet</div>
           <div class="empty-sub">Start by adding your first URL.</div>
         </div>
@@ -394,19 +365,19 @@
     </div>
 
   </main>
-</div><!-- /app-body -->
+</div>
 
-<!-- ══ MODALS ════════════════════════════════════════════════════════════ -->
+<!-- ════ MODALS ══════════════════════════════════════════════════════ -->
 
 <!-- Delete -->
 <div class="overlay" id="del-modal">
   <div class="modal">
     <div class="modal-title">🗑 Delete URL?</div>
     <div class="modal-sub">This action cannot be undone.</div>
-    <div style="background:var(--bg-input);border:1px solid var(--border);border-radius:6px;padding:10px 13px;font-size:11.5px;font-family:monospace;color:var(--red);word-break:break-all;" id="del-preview"></div>
-    <div class="modal-actions">
+    <div style="background:var(--bg-input);border:1px solid var(--border-card);border-radius:6px;padding:10px 13px;font-size:11.5px;font-family:monospace;color:var(--red);word-break:break-all;" id="del-preview"></div>
+    <div class="modal-acts">
       <button class="btn btn-ghost" id="btn-del-no">Cancel</button>
-      <button class="btn btn-danger" id="btn-del-ok">Yes, Delete</button>
+      <button class="btn btn-danger" id="btn-del-ok">Delete</button>
     </div>
   </div>
 </div>
@@ -415,21 +386,21 @@
 <div class="overlay" id="import-modal">
   <div class="modal">
     <div class="modal-title">📥 Import URLs</div>
-    <div class="modal-sub">Paste one URL per line. Duplicates are automatically skipped.</div>
+    <div class="modal-sub">Paste one URL per line. Duplicates are skipped automatically.</div>
     <div class="form-group">
-      <div class="form-label">Category for all imported URLs</div>
+      <div class="form-label">Category</div>
       <select id="import-cat">
         <option value="login">🔐 Login</option>
-        <option value="signup">✍️ Signup</option>
+        <option value="signup">👤 Signup</option>
         <option value="register">📝 Register</option>
-        <option value="dashboard">📊 Dashboard</option>
+        <option value="dashboard">⊞ Dashboard</option>
       </select>
     </div>
     <div class="form-group" style="margin-top:12px;">
       <div class="form-label">URLs (one per line)</div>
-      <textarea id="import-text" style="min-height:160px;" placeholder="https://example.com/login&#10;https://target.com/register&#10;https://app.com/signup"></textarea>
+      <textarea id="import-text" style="min-height:150px;" placeholder="https://example.com/login&#10;https://target.com/register&#10;https://app.com/signup"></textarea>
     </div>
-    <div class="modal-actions">
+    <div class="modal-acts">
       <button class="btn btn-ghost" id="btn-import-close">Cancel</button>
       <button class="btn btn-primary" id="btn-import-do">📥 Import</button>
     </div>
@@ -440,14 +411,14 @@
 <div class="overlay" id="scan-modal">
   <div class="modal">
     <div class="modal-title">🔎 Scan URLs</div>
-    <div class="modal-sub">Enter a domain and auto-detect common auth endpoints.</div>
+    <div class="modal-sub">Enter a domain to auto-generate common auth endpoints.</div>
     <div class="form-group">
       <div class="form-label">Target Domain</div>
       <input type="text" id="scan-domain" placeholder="e.g. example.com"/>
     </div>
-    <div style="background:var(--bg-input);border:1px solid var(--border);border-radius:6px;padding:12px 14px;font-size:12px;color:var(--text2);margin-top:12px;">
-      <div style="color:var(--cyan);font-weight:700;margin-bottom:6px;">Will scan for:</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11.5px;">
+    <div style="background:var(--bg-input);border:1px solid var(--border);border-radius:6px;padding:12px;margin-top:10px;">
+      <div style="color:var(--purple2);font-size:11px;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;">Will generate:</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11.5px;color:var(--text2);">
         <span>• /login</span><span>• /signup</span>
         <span>• /register</span><span>• /signin</span>
         <span>• /dashboard</span><span>• /admin</span>
@@ -455,25 +426,23 @@
         <span>• /account/login</span><span>• /portal</span>
       </div>
     </div>
-    <div class="modal-actions">
+    <div class="modal-acts">
       <button class="btn btn-ghost" id="btn-scan-close">Cancel</button>
       <button class="btn btn-primary" onclick="doScan()">🔎 Generate URLs</button>
     </div>
   </div>
 </div>
 
-<!-- TOAST -->
 <div id="toasts"></div>
 
 <script src="script.js"></script>
 <script>
-  // Category icon updater
-  function updateCatIcon(sel) {
-    const icons = { login:'🔐', signup:'✍️', register:'📝', dashboard:'📊' };
-    sel.previousElementSibling.textContent = icons[sel.value] || '🔐';
+  const ICONS = { login:'🔐', signup:'👤', register:'📝', dashboard:'⊞' };
+
+  function syncCatIcon(sel) {
+    document.getElementById('cat-ico').textContent = ICONS[sel.value] || '🔐';
   }
 
-  // Scan - generate URLs from domain
   function doScan() {
     const domain = document.getElementById('scan-domain').value.trim();
     if (!domain) { toast('Enter a domain first', 'error'); return; }
@@ -488,10 +457,8 @@
         added++;
       }
     });
-    persist();
-    renderStats();
-    renderTable();
-    closeScan();
+    persist(); renderStats(); renderTable();
+    document.getElementById('scan-modal').classList.remove('open');
     toast(`🔎 Generated ${added} URLs for ${domain}`, 'success');
   }
 </script>
