@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BugHunter URL Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <!-- SheetJS (Excel export) -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+
+<!-- ── HEADER ─────────────────────────────────── -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">🎯</div>
+    <div>
+      <div class="logo-text">BugHunter URLs</div>
+      <div class="logo-sub">URL Manager for Pentesters</div>
+    </div>
+  </div>
+  <div class="header-actions">
+    <div class="total-badge" id="total-badge">Total: <span>0</span></div>
+    <button class="btn btn-ghost btn-sm" id="btn-export">📥 Export Excel</button>
+    <button class="btn btn-danger btn-sm" id="btn-clear">🗑 Clear All</button>
+  </div>
+</header>
+
+<!-- ── LAYOUT ─────────────────────────────────── -->
+<div class="app-layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-label" style="padding:8px 24px 6px;">Views</div>
+
+    <div class="sidebar-section">
+      <div class="nav-item active" data-cat="all">
+        <span class="nav-icon">🌐</span>
+        All URLs
+        <span class="nav-count" id="nav-all">0</span>
+      </div>
+    </div>
+
+    <div class="sidebar-label" style="padding:8px 24px 6px;">Categories</div>
+
+    <div class="sidebar-section">
+      <div class="nav-item" data-cat="login">
+        <span class="cat-dot" style="background:#00d4ff"></span>
+        Login
+        <span class="nav-count" id="nav-login">0</span>
+      </div>
+      <div class="nav-item" data-cat="signup">
+        <span class="cat-dot" style="background:#00ff88"></span>
+        Signup
+        <span class="nav-count" id="nav-signup">0</span>
+      </div>
+      <div class="nav-item" data-cat="register">
+        <span class="cat-dot" style="background:#a855f7"></span>
+        Register
+        <span class="nav-count" id="nav-register">0</span>
+      </div>
+      <div class="nav-item" data-cat="dashboard">
+        <span class="cat-dot" style="background:#ffa502"></span>
+        Dashboard
+        <span class="nav-count" id="nav-dashboard">0</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-card" style="--card-color:#00d4ff">
+        <div class="stat-label">Total URLs</div>
+        <div class="stat-value" id="stat-total">0</div>
+        <div class="stat-icon">🌐</div>
+      </div>
+      <div class="stat-card" style="--card-color:#00d4ff">
+        <div class="stat-label">Login</div>
+        <div class="stat-value" id="stat-login">0</div>
+        <div class="stat-icon">🔐</div>
+      </div>
+      <div class="stat-card" style="--card-color:#00ff88">
+        <div class="stat-label">Signup</div>
+        <div class="stat-value" id="stat-signup">0</div>
+        <div class="stat-icon">✍️</div>
+      </div>
+      <div class="stat-card" style="--card-color:#a855f7">
+        <div class="stat-label">Register</div>
+        <div class="stat-value" id="stat-register">0</div>
+        <div class="stat-icon">📝</div>
+      </div>
+      <div class="stat-card" style="--card-color:#ffa502">
+        <div class="stat-label">Dashboard</div>
+        <div class="stat-value" id="stat-dashboard">0</div>
+        <div class="stat-icon">📊</div>
+      </div>
+      <div class="stat-card" style="--card-color:#ff4757">
+        <div class="stat-label">Duplicates</div>
+        <div class="stat-value" id="stat-dups">0</div>
+        <div class="stat-icon">⚠️</div>
+      </div>
+    </div>
+
+    <!-- TWO COL -->
+    <div class="two-col">
+
+      <!-- ADD URL CARD -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">➕ Add URL</div>
+        </div>
+        <div class="card-body">
+          <div class="add-form">
+
+            <div class="form-group">
+              <label for="inp-url">URL *</label>
+              <input
+                type="url"
+                id="inp-url"
+                placeholder="https://example.com/login"
+                autocomplete="off"
+                spellcheck="false"
+              />
+              <div class="error-msg" id="url-error"></div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="inp-cat">Category *</label>
+                <select id="inp-cat">
+                  <option value="login">🔐 Login</option>
+                  <option value="signup">✍️ Signup</option>
+                  <option value="register">📝 Register</option>
+                  <option value="dashboard">📊 Dashboard</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="inp-note">Note (optional)</label>
+              <input type="text" id="inp-note" placeholder="e.g. Admin panel, OAuth, etc." />
+            </div>
+
+            <button class="btn btn-primary btn-full" id="btn-add">
+              ➕ Add URL
+            </button>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- CHART CARD -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📊 URL Distribution</div>
+        </div>
+        <div class="card-body">
+          <div class="chart-container">
+            <canvas id="catChart"></canvas>
+          </div>
+          <div class="chart-legend">
+            <div class="legend-item">
+              <span class="legend-label">
+                <span class="legend-dot" style="background:#00d4ff"></span> Login
+              </span>
+              <span class="legend-count" id="stat-login-leg">0</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-label">
+                <span class="legend-dot" style="background:#00ff88"></span> Signup
+              </span>
+              <span class="legend-count" id="stat-signup-leg">0</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-label">
+                <span class="legend-dot" style="background:#a855f7"></span> Register
+              </span>
+              <span class="legend-count" id="stat-register-leg">0</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-label">
+                <span class="legend-dot" style="background:#ffa502"></span> Dashboard
+              </span>
+              <span class="legend-count" id="stat-dashboard-leg">0</span>
+            </div>
+
+            <!-- Progress bars -->
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;">
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-bottom:3px;">
+                  <span>Login</span><span id="pct-login">0%</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" id="bar-login" style="width:0%;background:#00d4ff"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-bottom:3px;">
+                  <span>Signup</span><span id="pct-signup">0%</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" id="bar-signup" style="width:0%;background:#00ff88"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-bottom:3px;">
+                  <span>Register</span><span id="pct-register">0%</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" id="bar-register" style="width:0%;background:#a855f7"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-bottom:3px;">
+                  <span>Dashboard</span><span id="pct-dashboard">0%</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" id="bar-dashboard" style="width:0%;background:#ffa502"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /two-col -->
+
+    <!-- TABLE CARD -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📋 URL List</div>
+        <div style="display:flex;gap:10px;align-items:center;flex:1;justify-content:flex-end;flex-wrap:wrap;">
+          <!-- Filter tabs -->
+          <div class="filter-tabs">
+            <button class="filter-tab active" data-cat="all">All</button>
+            <button class="filter-tab" data-cat="login"     style="--tab-color:#00d4ff">Login</button>
+            <button class="filter-tab" data-cat="signup"    style="--tab-color:#00ff88">Signup</button>
+            <button class="filter-tab" data-cat="register"  style="--tab-color:#a855f7">Register</button>
+            <button class="filter-tab" data-cat="dashboard" style="--tab-color:#ffa502">Dashboard</button>
+          </div>
+          <!-- Search -->
+          <div class="search-wrapper" style="max-width:240px;">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search-input" placeholder="Search URLs…" />
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>URL</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Note</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="url-tbody"></tbody>
+        </table>
+
+        <div class="empty-state" id="empty-state">
+          <div class="empty-icon">🎯</div>
+          <div class="empty-title">No URLs yet</div>
+          <div class="empty-sub">Add your first URL above to start hunting!</div>
+        </div>
+      </div>
+    </div><!-- /table card -->
+
+  </main>
+</div><!-- /app-layout -->
+
+<!-- ── DELETE MODAL ────────────────────────── -->
+<div class="modal-overlay" id="del-modal">
+  <div class="modal">
+    <div class="modal-title">🗑 Delete URL?</div>
+    <div class="modal-sub">This action cannot be undone.</div>
+    <div style="background:var(--bg-input);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:12px;font-family:monospace;color:var(--accent-red);word-break:break-all;" id="del-url-preview"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="btn-del-cancel">Cancel</button>
+      <button class="btn btn-danger" id="btn-del-confirm">Yes, Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOAST CONTAINER ────────────────────── -->
+<div id="toast-container"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
